@@ -113,7 +113,7 @@ STYLE_PRC(){
         echo -e "\nI don't have a record for that phone number, what's your name?"
         read CUSTOMER_NAME
         INSERT_NEW_CUSTOMER=$($PSQL "INSERT INTO customers (name , phone) VALUES ('$CUSTOMER_NAME' , '$CUSTOMER_PHONE')")
-        echo -e "\nWhat time would you like your $SERVICE,$CUSTOMER_NAME?"
+        echo -e "\nWhat time would you like your $SERVICE, $CUSTOMER_NAME?"
         read SERVICE_TIME
         CUSTOMER_ID=$($PSQL "SELECT customer_id FROM customers WHERE phone='$CUSTOMER_PHONE'")
         INSERT_APPOINTMENT_CUT=$($PSQL "INSERT INTO appointments (customer_id, service_id, time) VALUES ($CUSTOMER_ID, $SERVICE_ID, '$SERVICE_TIME')")
@@ -124,7 +124,7 @@ STYLE_PRC(){
         read SERVICE_TIME
         CUSTOMER_ID=$($PSQL "SELECT customer_id FROM customers WHERE phone='$CUSTOMER_PHONE'")
         INSERT_APPOINTMENT_CUT=$($PSQL "INSERT INTO appointments (customer_id, service_id, time) VALUES ($CUSTOMER_ID, $SERVICE_ID, '$SERVICE_TIME')")
-        echo -e "\nI have put you down for a $SERVICE at $SERVICE_TIME,$CUSTOMER_NAME"
+        echo -e "\nI have put you down for a $SERVICE at $SERVICE_TIME, $CUSTOMER_NAME"
 
     fi
 }
