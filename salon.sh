@@ -8,9 +8,9 @@ MAIN_MENU() {
     echo -e "Welcome to My Salon, how can I help you?\n"
 
     echo -e "1) cut\n2) color\n3) perm\n4) style\n5) trim"
-    read MAIN_MENU_SELECTION
+    read SERVICE_ID_SELECTED
 
-    case $MAIN_MENU_SELECTION in
+    case $SERVICE_ID_SELECTED in
     1) CUT_PRC ;;
 
     *) MAIN_MENU "Escaped switch" ;;
@@ -19,30 +19,32 @@ MAIN_MENU() {
 
 #get phone numbers from records
 CUT_PRC() {
+    SERVICE='cut'
     #get phone number
     echo -e "\n What's your phone number?"
     read CUSTOMER_PHONE
-    CUSTOMER_NAME=$($PSQL "SELECT name FROM customers WHERE phone = '$CUSTOMER_PHONE'")
+    GET_CUSTOMER_NAME=$($PSQL "SELECT name FROM customers WHERE phone = '$CUSTOMER_PHONE'")
     #check phone against records
     #if no record ask for name
-    if [[ -z $CUSTOMER_NAME ]]; then
+    if [[ -z $GET_CUSTOMER_NAME ]]; then
         echo -e "\nI don't have a record for that phone number, what's your name?"
-        read NEW_CUSTOMER_NAME
-        INSERT_NEW_CUSTOMER=$($PSQL "INSERT INTO customers (name , phone) VALUES ('$NEW_CUSTOMER_NAME' , '$CUSTOMER_PHONE')")
-        echo -e "\nWelcome $NEW_CUSTOMER_NAME, at what time would you like your cut?"
-        read APT_TIME
+        read CUSTOMER_NAME
+        INSERT_NEW_CUSTOMER=$($PSQL "INSERT INTO customers (name , phone) VALUES ('$CUSTOMER_NAME' , '$CUSTOMER_PHONE')")
+        echo -e "\nWelcome $CUSTOMER_NAME, at what time would you like your cut?"
+        read SERVICE_TIME
         #get custmer id
         CUSTOMER_ID=$($PSQL "SELECT customer_id FROM customers WHERE phone='$CUSTOMER_PHONE'")
         #insert appointment (for cut)
-        INSERT_APPOINTMENT_CUT=$($PSQL "INSERT INTO appointments (customer_id, service_id, time) VALUES ($CUSTOMER_ID, 1, '$APT_TIME')")
+        INSERT_APPOINTMENT_CUT=$($PSQL "INSERT INTO appointments (customer_id, service_id, time) VALUES ($CUSTOMER_ID, 1, '$SERVICE_TIME')")
         #message to confirm apt type and time
-        echo -e "\nI've put you down for a cut at $APT_TIME,$NEW_CUSTOMER_NAME"
+        echo -e "\nI have put you down for a $SERVICE at $SERVICE_TIME,$CUSTOMER_NAME"
     else
+        CUSTOMER_NAME=$($PSQL "SELECT name FROM customers WHERE phone='$CUSTOMER_PHONE'")
         echo -e "\nHello again$CUSTOMER_NAME, at what time u want yer cut, fella?"
-        read APT_TIME
+        read SERVICE_TIME
         CUSTOMER_ID=$($PSQL "SELECT customer_id FROM customers WHERE phone='$CUSTOMER_PHONE'")
         INSERT_APPOINTMENT_CUT=$($PSQL "INSERT INTO appointments (customer_id, service_id, time) VALUES ($CUSTOMER_ID, 1, '$APT_TIME')")
-        echo -e "\nI've put you down for a cut at $APT_TIME, $CUSTOMER_NAME"
+        echo -e "\nI have put you down for a $SERVICE at $SERVICE_TIME, $CUSTOMER_NAME"
 
     fi
 
