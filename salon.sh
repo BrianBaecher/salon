@@ -34,28 +34,29 @@ CUT_PRC() {
         echo -e "\nI don't have a record for that phone number, what's your name?"
         read CUSTOMER_NAME
         INSERT_NEW_CUSTOMER=$($PSQL "INSERT INTO customers (name , phone) VALUES ('$CUSTOMER_NAME' , '$CUSTOMER_PHONE')")
-        echo -e "\nWhat time would you like your $SERVICE,$CUSTOMER_NAME?"
+        echo -e "\nWhat time would you like your $(echo $SERVICE | sed -E 's/^ *| *$//g'), $(echo $CUSTOMER_NAME | sed -E 's/^ *| *$//g')?"
         read SERVICE_TIME
         #get custmer id
         CUSTOMER_ID=$($PSQL "SELECT customer_id FROM customers WHERE phone='$CUSTOMER_PHONE'")
         #insert appointment (for cut)
         INSERT_APPOINTMENT_CUT=$($PSQL "INSERT INTO appointments (customer_id, service_id, time) VALUES ($CUSTOMER_ID, $SERVICE_ID, '$SERVICE_TIME')")
         #message to confirm apt type and time
-        echo -e "\nI have put you down for a $SERVICE at $SERVICE_TIME, $CUSTOMER_NAME"
+        echo -e "\nI have put you down for a $(echo $SERVICE | sed -E 's/^ *| *$//g') at $(echo $SERVICE_TIME | sed -E 's/^ *| *$//g'), $(echo $CUSTOMER_NAME | sed -E 's/^ *| *$//g')."
+
     else
         CUSTOMER_NAME=$($PSQL "SELECT name FROM customers WHERE phone='$CUSTOMER_PHONE'")
-        echo -e "\nWhat time would you like your $SERVICE, $CUSTOMER_NAME?"
+        echo -e "\nWhat time would you like your $(echo $SERVICE | sed -E 's/^ *| *$//g'), $(echo $CUSTOMER_NAME | sed -E 's/^ *| *$//g')?"
         read SERVICE_TIME
         CUSTOMER_ID=$($PSQL "SELECT customer_id FROM customers WHERE phone='$CUSTOMER_PHONE'")
         INSERT_APPOINTMENT_CUT=$($PSQL "INSERT INTO appointments (customer_id, service_id, time) VALUES ($CUSTOMER_ID, $SERVICE_ID, '$SERVICE_TIME')")
-        echo -e "\nI have put you down for a $SERVICE at $SERVICE_TIME,$CUSTOMER_NAME"
+        echo -e "\nI have put you down for a $(echo $SERVICE | sed -E 's/^ *| *$//g') at $(echo $SERVICE_TIME | sed -E 's/^ *| *$//g'), $(echo $CUSTOMER_NAME | sed -E 's/^ *| *$//g')."
 
     fi
 
 }
-COLOR_PRC(){
-  SERVICE='color'
-  SERVICE_ID=$($PSQL "SELECT service_id FROM services WHERE name='$SERVICE'")
+COLOR_PRC() {
+    SERVICE='color'
+    SERVICE_ID=$($PSQL "SELECT service_id FROM services WHERE name='$SERVICE'")
     echo -e "\n What's your phone number?"
     read CUSTOMER_PHONE
     GET_CUSTOMER_NAME=$($PSQL "SELECT name FROM customers WHERE phone = '$CUSTOMER_PHONE'")
@@ -63,24 +64,25 @@ COLOR_PRC(){
         echo -e "\nI don't have a record for that phone number, what's your name?"
         read CUSTOMER_NAME
         INSERT_NEW_CUSTOMER=$($PSQL "INSERT INTO customers (name , phone) VALUES ('$CUSTOMER_NAME' , '$CUSTOMER_PHONE')")
-        echo -e "\nWhat time would you like your $SERVICE,$CUSTOMER_NAME?"
+        echo -e "\nWhat time would you like your $(echo $SERVICE | sed -E 's/^ *| *$//g'), $(echo $CUSTOMER_NAME | sed -E 's/^ *| *$//g')?"
         read SERVICE_TIME
         CUSTOMER_ID=$($PSQL "SELECT customer_id FROM customers WHERE phone='$CUSTOMER_PHONE'")
         INSERT_APPOINTMENT_CUT=$($PSQL "INSERT INTO appointments (customer_id, service_id, time) VALUES ($CUSTOMER_ID, $SERVICE_ID, '$SERVICE_TIME')")
-        echo -e "\nI have put you down for a $SERVICE at $SERVICE_TIME, $CUSTOMER_NAME"
+        echo -e "\nI have put you down for a $(echo $SERVICE | sed -E 's/^ *| *$//g') at $(echo $SERVICE_TIME | sed -E 's/^ *| *$//g'), $(echo $CUSTOMER_NAME | sed -E 's/^ *| *$//g')."
+
     else
         CUSTOMER_NAME=$($PSQL "SELECT name FROM customers WHERE phone='$CUSTOMER_PHONE'")
-        echo -e "\nWhat time would you like your $SERVICE, $CUSTOMER_NAME?"
+        echo -e "\nWhat time would you like your $(echo $SERVICE | sed -E 's/^ *| *$//g'), $(echo $CUSTOMER_NAME | sed -E 's/^ *| *$//g')?"
         read SERVICE_TIME
         CUSTOMER_ID=$($PSQL "SELECT customer_id FROM customers WHERE phone='$CUSTOMER_PHONE'")
         INSERT_APPOINTMENT_CUT=$($PSQL "INSERT INTO appointments (customer_id, service_id, time) VALUES ($CUSTOMER_ID, $SERVICE_ID, '$SERVICE_TIME')")
-        echo -e "\nI have put you down for a $SERVICE at $SERVICE_TIME,$CUSTOMER_NAME"
+        echo -e "\nI have put you down for a $(echo $SERVICE | sed -E 's/^ *| *$//g') at $(echo $SERVICE_TIME | sed -E 's/^ *| *$//g'), $(echo $CUSTOMER_NAME | sed -E 's/^ *| *$//g')."
 
     fi
 }
-PERM_PRC(){
-  SERVICE='perm'
-  SERVICE_ID=$($PSQL "SELECT service_id FROM services WHERE name='$SERVICE'")
+PERM_PRC() {
+    SERVICE='perm'
+    SERVICE_ID=$($PSQL "SELECT service_id FROM services WHERE name='$SERVICE'")
     echo -e "\n What's your phone number?"
     read CUSTOMER_PHONE
     GET_CUSTOMER_NAME=$($PSQL "SELECT name FROM customers WHERE phone = '$CUSTOMER_PHONE'")
@@ -88,24 +90,25 @@ PERM_PRC(){
         echo -e "\nI don't have a record for that phone number, what's your name?"
         read CUSTOMER_NAME
         INSERT_NEW_CUSTOMER=$($PSQL "INSERT INTO customers (name , phone) VALUES ('$CUSTOMER_NAME' , '$CUSTOMER_PHONE')")
-        echo -e "\nWhat time would you like your $SERVICE,$CUSTOMER_NAME?"
+        echo -e "\nWhat time would you like your $(echo $SERVICE | sed -E 's/^ *| *$//g'), $(echo $CUSTOMER_NAME | sed -E 's/^ *| *$//g')?"
         read SERVICE_TIME
         CUSTOMER_ID=$($PSQL "SELECT customer_id FROM customers WHERE phone='$CUSTOMER_PHONE'")
         INSERT_APPOINTMENT_CUT=$($PSQL "INSERT INTO appointments (customer_id, service_id, time) VALUES ($CUSTOMER_ID, $SERVICE_ID, '$SERVICE_TIME')")
-        echo -e "\nI have put you down for a $SERVICE at $SERVICE_TIME, $CUSTOMER_NAME"
+        echo -e "\nI have put you down for a $(echo $SERVICE | sed -E 's/^ *| *$//g') at $(echo $SERVICE_TIME | sed -E 's/^ *| *$//g'), $(echo $CUSTOMER_NAME | sed -E 's/^ *| *$//g')."
+
     else
         CUSTOMER_NAME=$($PSQL "SELECT name FROM customers WHERE phone='$CUSTOMER_PHONE'")
-        echo -e "\nWhat time would you like your $SERVICE, $CUSTOMER_NAME?"
+        echo -e "\nWhat time would you like your $(echo $SERVICE | sed -E 's/^ *| *$//g'), $(echo $CUSTOMER_NAME | sed -E 's/^ *| *$//g')?"
         read SERVICE_TIME
         CUSTOMER_ID=$($PSQL "SELECT customer_id FROM customers WHERE phone='$CUSTOMER_PHONE'")
         INSERT_APPOINTMENT_CUT=$($PSQL "INSERT INTO appointments (customer_id, service_id, time) VALUES ($CUSTOMER_ID, $SERVICE_ID, '$SERVICE_TIME')")
-        echo -e "\nI have put you down for a $SERVICE at $SERVICE_TIME,$CUSTOMER_NAME"
+        echo -e "\nI have put you down for a $(echo $SERVICE | sed -E 's/^ *| *$//g') at $(echo $SERVICE_TIME | sed -E 's/^ *| *$//g'), $(echo $CUSTOMER_NAME | sed -E 's/^ *| *$//g')."
 
     fi
 }
-STYLE_PRC(){
-  SERVICE='style'
-  SERVICE_ID=$($PSQL "SELECT service_id FROM services WHERE name='$SERVICE'")
+STYLE_PRC() {
+    SERVICE='style'
+    SERVICE_ID=$($PSQL "SELECT service_id FROM services WHERE name='$SERVICE'")
     echo -e "\n What's your phone number?"
     read CUSTOMER_PHONE
     GET_CUSTOMER_NAME=$($PSQL "SELECT name FROM customers WHERE phone = '$CUSTOMER_PHONE'")
@@ -113,24 +116,25 @@ STYLE_PRC(){
         echo -e "\nI don't have a record for that phone number, what's your name?"
         read CUSTOMER_NAME
         INSERT_NEW_CUSTOMER=$($PSQL "INSERT INTO customers (name , phone) VALUES ('$CUSTOMER_NAME' , '$CUSTOMER_PHONE')")
-        echo -e "\nWhat time would you like your $SERVICE, $CUSTOMER_NAME?"
+        echo -e "\nWhat time would you like your $(echo $SERVICE | sed -E 's/^ *| *$//g'), $(echo $CUSTOMER_NAME | sed -E 's/^ *| *$//g')?"
         read SERVICE_TIME
         CUSTOMER_ID=$($PSQL "SELECT customer_id FROM customers WHERE phone='$CUSTOMER_PHONE'")
         INSERT_APPOINTMENT_CUT=$($PSQL "INSERT INTO appointments (customer_id, service_id, time) VALUES ($CUSTOMER_ID, $SERVICE_ID, '$SERVICE_TIME')")
-        echo -e "\nI have put you down for a $SERVICE at $SERVICE_TIME, $CUSTOMER_NAME"
+        echo -e "\nI have put you down for a $(echo $SERVICE | sed -E 's/^ *| *$//g') at $(echo $SERVICE_TIME | sed -E 's/^ *| *$//g'), $(echo $CUSTOMER_NAME | sed -E 's/^ *| *$//g')."
+
     else
         CUSTOMER_NAME=$($PSQL "SELECT name FROM customers WHERE phone='$CUSTOMER_PHONE'")
-        echo -e "\nWhat time would you like your $SERVICE, $CUSTOMER_NAME?"
+        echo -e "\nWhat time would you like your $(echo $SERVICE | sed -E 's/^ *| *$//g'), $(echo $CUSTOMER_NAME | sed -E 's/^ *| *$//g')?"
         read SERVICE_TIME
         CUSTOMER_ID=$($PSQL "SELECT customer_id FROM customers WHERE phone='$CUSTOMER_PHONE'")
         INSERT_APPOINTMENT_CUT=$($PSQL "INSERT INTO appointments (customer_id, service_id, time) VALUES ($CUSTOMER_ID, $SERVICE_ID, '$SERVICE_TIME')")
-        echo -e "\nI have put you down for a $SERVICE at $SERVICE_TIME, $CUSTOMER_NAME"
+        echo -e "\nI have put you down for a $(echo $SERVICE | sed -E 's/^ *| *$//g') at $(echo $SERVICE_TIME | sed -E 's/^ *| *$//g'), $(echo $CUSTOMER_NAME | sed -E 's/^ *| *$//g')."
 
     fi
 }
-TRIM_PRC(){
-  SERVICE='trim'
-  SERVICE_ID=$($PSQL "SELECT service_id FROM services WHERE name='$SERVICE'")
+TRIM_PRC() {
+    SERVICE='trim'
+    SERVICE_ID=$($PSQL "SELECT service_id FROM services WHERE name='$SERVICE'")
     echo -e "\n What's your phone number?"
     read CUSTOMER_PHONE
     GET_CUSTOMER_NAME=$($PSQL "SELECT name FROM customers WHERE phone = '$CUSTOMER_PHONE'")
@@ -138,18 +142,19 @@ TRIM_PRC(){
         echo -e "\nI don't have a record for that phone number, what's your name?"
         read CUSTOMER_NAME
         INSERT_NEW_CUSTOMER=$($PSQL "INSERT INTO customers (name , phone) VALUES ('$CUSTOMER_NAME' , '$CUSTOMER_PHONE')")
-        echo -e "\nWhat time would you like your $SERVICE,$CUSTOMER_NAME?"
+        echo -e "\nWhat time would you like your $(echo $SERVICE | sed -E 's/^ *| *$//g'), $(echo $CUSTOMER_NAME | sed -E 's/^ *| *$//g')?"
         read SERVICE_TIME
         CUSTOMER_ID=$($PSQL "SELECT customer_id FROM customers WHERE phone='$CUSTOMER_PHONE'")
         INSERT_APPOINTMENT_CUT=$($PSQL "INSERT INTO appointments (customer_id, service_id, time) VALUES ($CUSTOMER_ID, $SERVICE_ID, '$SERVICE_TIME')")
-        echo -e "\nI have put you down for a $SERVICE at $SERVICE_TIME, $CUSTOMER_NAME"
+        echo -e "\nI have put you down for a $(echo $SERVICE | sed -E 's/^ *| *$//g') at $(echo $SERVICE_TIME | sed -E 's/^ *| *$//g'), $(echo $CUSTOMER_NAME | sed -E 's/^ *| *$//g')."
+
     else
         CUSTOMER_NAME=$($PSQL "SELECT name FROM customers WHERE phone='$CUSTOMER_PHONE'")
-        echo -e "\nWhat time would you like your $SERVICE,$CUSTOMER_NAME?"
+        echo -e "\nWhat time would you like your $(echo $SERVICE | sed -E 's/^ *| *$//g'), $(echo $CUSTOMER_NAME | sed -E 's/^ *| *$//g')?"
         read SERVICE_TIME
         CUSTOMER_ID=$($PSQL "SELECT customer_id FROM customers WHERE phone='$CUSTOMER_PHONE'")
         INSERT_APPOINTMENT_CUT=$($PSQL "INSERT INTO appointments (customer_id, service_id, time) VALUES ($CUSTOMER_ID, $SERVICE_ID, '$SERVICE_TIME')")
-        echo -e "\nI have put you down for a $SERVICE at $SERVICE_TIME,$CUSTOMER_NAME"
+        echo -e "\nI have put you down for a $(echo $SERVICE | sed -E 's/^ *| *$//g') at $(echo $SERVICE_TIME | sed -E 's/^ *| *$//g'), $(echo $CUSTOMER_NAME | sed -E 's/^ *| *$//g')."
 
     fi
 }
